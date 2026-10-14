@@ -8,6 +8,8 @@ Hardware bring-up is in progress. The DAC is detected over I2C (address 0x62) an
 
 ## How it works
 
+![Breadboard setup](setup.webp)
+
 The DAC output drives a 560 ohm sense resistor in series with the device under test (DUT), then to ground.
 
 - A1 reads the voltage at the top of the resistor (V_src).
