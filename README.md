@@ -4,11 +4,15 @@ An automated I-V curve tracer for diodes and LEDs (BJTs and MOSFETs planned), bu
 
 ## Status: working prototype
 
-The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode. LED sweeps and transistor support are next.
+The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode and a red LED. Transistor support is next.
 
 ![1N4007 I-V curve](1N4007.png)
 
-## Results (1N4007, three back-to-back sweeps)
+## Results
+
+Each device was swept three times back to back. A Shockley fit was applied to 0.05 to 7 mA of each sweep, assuming room temperature of about 25 C (thermal voltage 25.69 mV).
+
+**1N4007 silicon diode**
 
 | Run | Ideality factor n | Saturation current Is | Voltage at 1 mA |
 |---|---|---|---|
@@ -16,11 +20,21 @@ The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode. LED 
 | 2 | 1.73 | 1.60e-09 A | 0.5931 V |
 | 3 | 1.74 | 1.69e-09 A | 0.5927 V |
 
-- The voltage at 1 mA varied by 0.5 mV across the three runs (short-term repeatability).
-- The semilog plot is a straight line from about 0.4 V upward, as the Shockley equation predicts.
-- Fit details: Shockley equation fitted to 0.05 to 7 mA, assuming room temperature of about 25 C (thermal voltage 25.69 mV). Results are from one diode in one session.
+**Red LED**
 
-![Repeatability and Shockley fit](repeatability.png)
+| Run | Ideality factor n | Saturation current Is | Voltage at 1 mA |
+|---|---|---|---|
+| 1 | 2.35 | 8.36e-16 A | 1.6729 V |
+| 2 | 2.32 | 5.72e-16 A | 1.6737 V |
+| 3 | 2.35 | 7.78e-16 A | 1.6726 V |
+
+- The voltage at 1 mA varied by 0.5 mV (diode) and 1.1 mV (LED) across three runs (short-term repeatability).
+- Both semilog plots are straight lines over the fitted range, as the Shockley equation predicts.
+- Results are from one diode and one LED in one session. The fitted n and Is depend on the fit range and series resistance, and Is moves together with n.
+
+![1N4007 repeatability and Shockley fit](repeatability.png)
+
+![Red LED repeatability and Shockley fit](LED_red_run1_analysis.png)
 
 Known limits: the ADC step is about 5 mV, so currents below roughly 10 microamps are noise. The DAC output tops out near 4.7 V under load because the Uno's 5 V rail sags at about 7 mA.
 
@@ -48,7 +62,7 @@ The DAC was verified by reading its unloaded output back with the Uno's ADC: mea
 
 - `curve_tracer_v1/curve_tracer_v1.ino`: Arduino firmware. Send `s` over serial (115200 baud) to run one sweep. Output is CSV: `code,v_src,v_dut,i_ma`.
 - `plot_iv.py`: triggers a sweep, saves a CSV, and plots linear and semilog I-V curves. Usage: `python plot_iv.py COM4 1N4007`
-- `analyze_iv.py`: overlays repeated sweeps and fits the Shockley equation. Usage: `python analyze_iv.py run1 run2 run3`
+- `analyze_iv.py`: overlays repeated sweeps and fits the Shockley equation. Usage: `python analyze_iv.py run1 run2 run3` (saves `<run1>_analysis.png`)
 
 Requires Python with `pyserial`, `matplotlib`, and `numpy`.
 
@@ -58,8 +72,7 @@ Requires Python with `pyserial`, `matplotlib`, and `numpy`.
 - [x] Firmware and plotting script written
 - [x] DAC output verified against commanded codes
 - [x] First clean I-V sweep of a 1N4007 diode
-- [x] Repeatability tests (three sweeps, same diode)
-- [x] Shockley fit for ideality factor and saturation current
-- [ ] LED sweeps
+- [x] Repeatability tests and Shockley fit (diode)
+- [x] LED sweeps with repeatability and fit (red LED)
 - [ ] Compare against a datasheet or LTspice model
 - [ ] Add BJT / MOSFET support
