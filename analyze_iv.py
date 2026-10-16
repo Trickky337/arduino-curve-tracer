@@ -47,5 +47,5 @@ for a in ax:
     a.grid(True)
     a.legend()
 plt.tight_layout()
-plt.savefig("repeatability.png", dpi=150)
+plt.savefig(f"{names[0]}_analysis.png", dpi=150)
 plt.show()
