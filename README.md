@@ -1,14 +1,26 @@
 ﻿# Arduino Curve Tracer
 
-An automated I-V curve tracer for diodes and LEDs (BJTs and MOSFETs planned), built with an Arduino Uno, an Adafruit MCP4725 12-bit DAC, and a Python plotting tool.
+An automated I-V curve tracer for diodes and LEDs (BJTs and MOSFETs planned), built with an Arduino Uno, an Adafruit MCP4725 12-bit DAC, and Python analysis tools.
 
 ## Status: working prototype
 
-The tracer produces clean I-V sweeps of a 1N4007 silicon diode. Repeatability tests, LED sweeps, and transistor support are next.
+The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode. LED sweeps and transistor support are next.
 
 ![1N4007 I-V curve](1N4007.png)
 
-First measured sweep (1N4007): current reaches about 1 mA near 0.6 V and 7 mA at 0.68 V. The semilog plot is a straight line from about 0.4 V upward, as the Shockley equation predicts. A rough estimate of the ideality factor from the slope is about 1.6 to 1.7 (a proper curve fit is still to do). Raw data is in `1N4007.csv`.
+## Results (1N4007, three back-to-back sweeps)
+
+| Run | Ideality factor n | Saturation current Is | Voltage at 1 mA |
+|---|---|---|---|
+| 1 | 1.74 | 1.67e-09 A | 0.5926 V |
+| 2 | 1.73 | 1.60e-09 A | 0.5931 V |
+| 3 | 1.74 | 1.69e-09 A | 0.5927 V |
+
+- The voltage at 1 mA varied by 0.5 mV across the three runs (short-term repeatability).
+- The semilog plot is a straight line from about 0.4 V upward, as the Shockley equation predicts.
+- Fit details: Shockley equation fitted to 0.05 to 7 mA, assuming room temperature of about 25 C (thermal voltage 25.69 mV). Results are from one diode in one session.
+
+![Repeatability and Shockley fit](repeatability.png)
 
 Known limits: the ADC step is about 5 mV, so currents below roughly 10 microamps are noise. The DAC output tops out near 4.7 V under load because the Uno's 5 V rail sags at about 7 mA.
 
@@ -35,18 +47,19 @@ The DAC was verified by reading its unloaded output back with the Uno's ADC: mea
 ## Software
 
 - `curve_tracer_v1/curve_tracer_v1.ino`: Arduino firmware. Send `s` over serial (115200 baud) to run one sweep. Output is CSV: `code,v_src,v_dut,i_ma`.
-- `plot_iv.py`: Python tool (pyserial, matplotlib) that triggers a sweep, saves a CSV, and plots linear and semilog I-V curves.
+- `plot_iv.py`: triggers a sweep, saves a CSV, and plots linear and semilog I-V curves. Usage: `python plot_iv.py COM4 1N4007`
+- `analyze_iv.py`: overlays repeated sweeps and fits the Shockley equation. Usage: `python analyze_iv.py run1 run2 run3`
 
-Usage: `python plot_iv.py <serial-port> <device-name>`, for example `python plot_iv.py COM4 1N4007`.
+Requires Python with `pyserial`, `matplotlib`, and `numpy`.
 
 ## Roadmap
 
 - [x] Wire up Uno, DAC, sense resistor, and diode
 - [x] Firmware and plotting script written
-- [x] I2C communication with the DAC verified
 - [x] DAC output verified against commanded codes
 - [x] First clean I-V sweep of a 1N4007 diode
-- [ ] Repeatability tests (multiple sweeps, same diode)
-- [ ] Fit the Shockley equation to extract ideality factor and saturation current
+- [x] Repeatability tests (three sweeps, same diode)
+- [x] Shockley fit for ideality factor and saturation current
 - [ ] LED sweeps
+- [ ] Compare against a datasheet or LTspice model
 - [ ] Add BJT / MOSFET support
