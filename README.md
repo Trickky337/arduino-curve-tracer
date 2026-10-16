@@ -8,8 +8,6 @@ The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode and a
 
 ![1N4007 I-V curve](1N4007.png)
 
-![Red LED test setup](LED_setup.jpeg)
-
 ## Results
 
 Each device was swept three times back to back. A Shockley fit was applied to 0.05 to 7 mA of each sweep, assuming room temperature of about 25 C (thermal voltage 25.69 mV).
@@ -41,6 +39,8 @@ Each device was swept three times back to back. A Shockley fit was applied to 0.
 Known limits: the ADC step is about 5 mV, so currents below roughly 10 microamps are noise. The DAC output tops out near 4.7 V under load because the Uno's 5 V rail sags at about 7 mA.
 
 ![Breadboard setup](setup.webp)
+
+![Red LED test setup](LED_setup.jpeg)
 
 ## How it works
 
