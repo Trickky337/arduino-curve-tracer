@@ -8,6 +8,8 @@ The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode and a
 
 ![1N4007 I-V curve](1N4007.png)
 
+![Red LED test setup](led_setup.jpg)
+
 ## Results
 
 Each device was swept three times back to back. A Shockley fit was applied to 0.05 to 7 mA of each sweep, assuming room temperature of about 25 C (thermal voltage 25.69 mV).
