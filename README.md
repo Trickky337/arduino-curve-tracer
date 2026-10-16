@@ -8,7 +8,7 @@ The tracer produces clean, repeatable I-V sweeps of a 1N4007 silicon diode and a
 
 ![1N4007 I-V curve](1N4007.png)
 
-![Red LED test setup](led_setup.jpg)
+![Red LED test setup](LED_SETUP.jpg)
 
 ## Results
 
