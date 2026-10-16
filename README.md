@@ -53,6 +53,12 @@ The DAC output drives a 560 ohm sense resistor in series with the device under t
 
 The DAC was verified by reading its unloaded output back with the Uno's ADC: measured voltage matched the commanded value within about 0.02 V from 0 to 4.9 V.
 
+## Schematic
+
+![Curve tracer schematic](hardware/curve_tracer_schematic.png)
+
+The KiCad project files are in `hardware/curve_tracer/`.
+
 ## Hardware
 
 - Arduino Uno R3
