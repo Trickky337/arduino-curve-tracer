@@ -8,8 +8,6 @@ port, name = sys.argv[1], sys.argv[2]
 ser = serial.Serial(port, 115200, timeout=10)
 time.sleep(2.5)                       # the Uno resets when the port opens
 ser.reset_input_buffer()
-while ser.readline().decode(errors="ignore").strip() != "READY":
-    pass
 ser.write(b"s")
 
 rows, started = [], False
