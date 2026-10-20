@@ -74,6 +74,10 @@ The KiCad project files are in `hardware/curve_tracer/`.
 
 Requires Python with `pyserial`, `matplotlib`, and `numpy`.
 
+## Test plan
+
+Requirements, procedures, pass/fail criteria, results, and known limitations are in [docs/TEST_PLAN.md](docs/TEST_PLAN.md).
+
 ## Roadmap
 
 - [x] Wire up Uno, DAC, sense resistor, and diode
