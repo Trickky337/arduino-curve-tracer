@@ -71,6 +71,7 @@ The KiCad project files are in `hardware/curve_tracer/`.
 - `curve_tracer_v1/curve_tracer_v1.ino`: Arduino firmware. Send `s` over serial (115200 baud) to run one sweep. Output is CSV: `code,v_src,v_dut,i_ma`.
 - `plot_iv.py`: triggers a sweep, saves a CSV, and plots linear and semilog I-V curves. Usage: `python plot_iv.py COM4 1N4007`
 - `analyze_iv.py`: overlays repeated sweeps and fits the Shockley equation. Usage: `python analyze_iv.py run1 run2 run3` (saves `<run1>_analysis.png`)
+- `run_test.py`: runs N sweeps, checks the test-plan requirements, and writes a Markdown report with a plot to `reports/`. Offline mode (`--csv`) is verified; live mode (`--port`) is pending a hardware test.
 
 Requires Python with `pyserial`, `matplotlib`, and `numpy`.
 
